@@ -2,6 +2,8 @@ let cardsQuantity;
 
 let cardsFront = [];
 
+let flippedCards = [];
+
 let cards = [
     `<div class="card" id="card0" onclick="flipCard(this);">
         <div class="face back"></div>
@@ -78,11 +80,15 @@ function validateCards () {
     distributeCards();
 }
 
-
+function sortCards() { 
+	return Math.random() - 0.5; 
+}
 
 function distributeCards () { 
+
+    flippedCards = [];
     
-    for (let i = 0; i < (cardsQuantity); i++) {
+    for (let i = 0; i < cardsQuantity; i++) {
         const gif = {
             src: "gifs/" + i + ".gif",
             id: i
@@ -107,62 +113,71 @@ function distributeCards () {
         for (let i = 0; i < cardsQuantity; i++) {
         
             row1.innerHTML += cards[i];
-            frontFaces[i].style.background = "url('"+ cardsFront[i].src + "')";           
+            frontFaces[i].style.backgroundImage = "url('"+ cardsFront[i].src + "')";           
         }       
     }
 
     if ((cardsQuantity >= 7) && (cardsQuantity <= 12)) {
 
         row1.innerHTML += cards[0] + cards[1] + cards[2] + cards[3] + cards[4] + cards[5];
-        frontFaces[0].style.background = "url('"+ cardsFront[0].src + "')";     
-        frontFaces[1].style.background = "url('"+ cardsFront[1].src + "')"; 
-        frontFaces[2].style.background = "url('"+ cardsFront[2].src + "')"; 
-        frontFaces[3].style.background = "url('"+ cardsFront[3].src + "')"; 
-        frontFaces[4].style.background = "url('"+ cardsFront[4].src + "')"; 
-        frontFaces[5].style.background = "url('"+ cardsFront[5].src + "')"; 
+        frontFaces[0].style.backgroundImage = "url('"+ cardsFront[0].src + "')";     
+        frontFaces[1].style.backgroundImage = "url('"+ cardsFront[1].src + "')"; 
+        frontFaces[2].style.backgroundImage = "url('"+ cardsFront[2].src + "')"; 
+        frontFaces[3].style.backgroundImage = "url('"+ cardsFront[3].src + "')"; 
+        frontFaces[4].style.backgroundImage = "url('"+ cardsFront[4].src + "')"; 
+        frontFaces[5].style.backgroundImage = "url('"+ cardsFront[5].src + "')"; 
 
         for (let i = 6; i < cardsQuantity ; i++) {
             
             row2.innerHTML += cards[i];
-            frontFaces[i].style.background = "url('"+ cardsFront[i].src + "')";     
+            frontFaces[i].style.backgroundImage = "url('"+ cardsFront[i].src + "')";     
         }
     }
 
     if (cardsQuantity > 12) {
 
         row1.innerHTML += cards[0] + cards[1] + cards[2] + cards[3] + cards[4] + cards[5];
-        frontFaces[0].style.background = "url('"+ cardsFront[0].src + "')";     
-        frontFaces[1].style.background = "url('"+ cardsFront[1].src + "')"; 
-        frontFaces[2].style.background = "url('"+ cardsFront[2].src + "')"; 
-        frontFaces[3].style.background = "url('"+ cardsFront[3].src + "')"; 
-        frontFaces[4].style.background = "url('"+ cardsFront[4].src + "')"; 
-        frontFaces[5].style.background = "url('"+ cardsFront[5].src + "')"; 
+        frontFaces[0].style.backgroundImage = "url('"+ cardsFront[0].src + "')";     
+        frontFaces[1].style.backgroundImage = "url('"+ cardsFront[1].src + "')"; 
+        frontFaces[2].style.backgroundImage = "url('"+ cardsFront[2].src + "')"; 
+        frontFaces[3].style.backgroundImage = "url('"+ cardsFront[3].src + "')"; 
+        frontFaces[4].style.backgroundImage = "url('"+ cardsFront[4].src + "')"; 
+        frontFaces[5].style.backgroundImage = "url('"+ cardsFront[5].src + "')"; 
 
         row2.innerHTML += cards[6] + cards[7] + cards[8] + cards[9] + cards[10] + cards[11];
-        frontFaces[6].style.background = "url('"+ cardsFront[6].src + "')";     
-        frontFaces[7].style.background = "url('"+ cardsFront[7].src + "')"; 
-        frontFaces[8].style.background = "url('"+ cardsFront[8].src + "')"; 
-        frontFaces[9].style.background = "url('"+ cardsFront[9].src + "')"; 
-        frontFaces[10].style.background = "url('"+ cardsFront[10].src + "')"; 
-        frontFaces[11].style.background = "url('"+ cardsFront[11].src + "')"; 
+        frontFaces[6].style.backgroundImage = "url('"+ cardsFront[6].src + "')";     
+        frontFaces[7].style.backgroundImage = "url('"+ cardsFront[7].src + "')"; 
+        frontFaces[8].style.backgroundImage = "url('"+ cardsFront[8].src + "')"; 
+        frontFaces[9].style.backgroundImage = "url('"+ cardsFront[9].src + "')"; 
+        frontFaces[10].style.backgroundImage = "url('"+ cardsFront[10].src + "')"; 
+        frontFaces[11].style.backgroundImage = "url('"+ cardsFront[11].src + "')"; 
 
         for (let i = 12; i < cardsQuantity ; i++) {
             
             row3.innerHTML += cards[i];
-            frontFaces[i].style.background = "url('"+ cardsFront[i].src + "')";    
+            frontFaces[i].style.backgroundImage = "url('"+ cardsFront[i].src + "')";    
         }
-    }    
+    } 
 }
 
 function flipCard (selectedCard) {
-    const faces = selectedCard.getElementsByClassName('face');
-    faces[0].classList.toggle('flipped');
-    faces[1].classList.toggle('flipped');
-}
 
-function sortCards() { 
-	return Math.random() - 0.5; 
+    if(flippedCards.length < 2){
+        const faces = selectedCard.getElementsByClassName('face');
 
+        faces[0].classList.toggle('flipped');
+        faces[1].classList.toggle('flipped');
+
+        flippedCards.push(selectedCard);
+        
+    } else {
+        flippedCards[0].childNodes[1].classList.toggle("flipped");
+        flippedCards[0].childNodes[3].classList.toggle("flipped");
+        flippedCards[1].childNodes[1].classList.toggle("flipped");
+        flippedCards[1].childNodes[3].classList.toggle("flipped");
+
+        flippedCards = [];
+    } 
 }
 
 loadPage();
